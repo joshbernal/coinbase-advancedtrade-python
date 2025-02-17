@@ -38,7 +38,7 @@ class AlphaSquaredTrader:
 
     def _execute_buy(self, product_id: str, value: float):
         try:
-            order = self.coinbase_client.fiat_limit_buy(product_id, str(value), price_multiplier="0.995")
+            order = self.coinbase_client.fiat_limit_buy(product_id, str(value), price_multiplier="0.999")
             if isinstance(order, Order):
                 logger.info(f"Buy limit order placed: ID={order.id}, Size={order.size}, Price={order.price}")
             else:
@@ -61,7 +61,7 @@ class AlphaSquaredTrader:
         logger.info(f"Sell amount: {sell_amount} {asset}")
 
         if sell_amount > base_increment:
-            limit_price = (current_price * Decimal('1.005')).quantize(quote_increment, rounding=ROUND_DOWN)
+            limit_price = (current_price * Decimal('1.001')).quantize(quote_increment, rounding=ROUND_DOWN)
             
             order = self.coinbase_client.limit_order_gtc_sell(
                 client_order_id=self.coinbase_client._order_service._generate_client_order_id(),
